@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: teamone-microservice
+        app: team1-microservice
         stack: frontend
         source: demo
-    name: teamone-microservice
+    name: team1-microservice
     namespace: microservices
 spec:
     replicas: 3
     selector:
         matchLabels:
-            run: teamone-microservice
+            run: team1-microservice
     template:
         metadata:
             labels:
-                app: teamone-microservice
-                run: teamone-microservice
+                app: team1-microservice
+                run: team1-microservice
                 source: demo
         spec:
             containers:
-                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/teamone-microservice
-                    name: teamone-microservice
+                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/team1-microservice
+                    name: team1-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,13 +31,13 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: teamone-microservice-service
-    name: teamone-microservice-service
+        app: team1-microservice-service
+    name: team1-microservice-service
     namespace: microservices
 spec:
     selector:
         source: demo
-        app: teamone-microservice
+        app: team1-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -51,15 +51,15 @@ kind: Ingress
 metadata:
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: teamone-ingress
+    name: team1-ingress
     namespace: microservices
 spec:
     rules:
         -   http:
                 paths:
-                    -   path: /teamone(/|$)(.*)
+                    -   path: /team1(/|$)(.*)
                         backend:
-                            serviceName: teamone-microservice-service
+                            serviceName: team1-microservice-service
                             servicePort: 30201
 
 
